@@ -24,6 +24,18 @@ function criarPasta() {
   }
 }
 
+function pergunteProximoPasso() {
+  rl.question(`Deseja continuar executando o programa? (s/n): `, (answer) => {
+    if (answer.toLowerCase() === "s") {
+      iniciarPrograma();
+    } else {
+      console.log("Programa sendo encerrado...");
+      rl.close();
+      process.exit(0);
+    }
+  });
+}
+
 function criarAnotacao() {
   rl.question("Digite o nome do arquivo: ", (answer) => {
     const nomeArquivo = answer + ".txt";
@@ -31,7 +43,7 @@ function criarAnotacao() {
     rl.question("Digite o conteúdo da anotação: ", (conteudo) => {
       fs.writeFileSync(caminhoArquivo, conteudo, "utf-8");
       console.log("Arquivo criado com sucesso!");
-      iniciarPrograma();
+      pergunteProximoPasso();
     });
   });
 }
@@ -46,7 +58,7 @@ function listarAnotacoes() {
       console.log(`${index + 1} - ${arquivo}`)
     );
   }
-  iniciarPrograma();
+  pergunteProximoPasso();
 }
 
 function lerAnotacao() {
@@ -59,7 +71,7 @@ function lerAnotacao() {
     } else {
       console.log("Arquivo não encontrado");
     }
-    iniciarPrograma();
+    pergunteProximoPasso();
   });
 }
 
@@ -73,7 +85,7 @@ function excluirAnotacao() {
     } else {
       console.log("Arquivo não encontrado.");
     }
-    iniciarPrograma();
+    pergunteProximoPasso();
   });
 }
 
@@ -96,7 +108,7 @@ function iniciarPrograma() {
       case "5":
         console.log("Saindo...");
         rl.close();
-        break;
+        process.exit(0);
       default:
         console.log("Opção inválida. Por favor, tente novamente.");
         iniciarPrograma();
